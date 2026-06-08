@@ -3,19 +3,11 @@
 
 const { CATALOG } = require("./catalog");
 
-const SYSTEM_PROMPT = `Tu es l'assistant SAV technique d'OZO Electric, fabricant français de kits vélo électriques, batteries lithium, moteurs et solutions de motorisation.
+const SYSTEM_PROMPT = `Tu es l'assistant SAV technique d'OZO Electric. À partir du catalogue ci-dessous, rédige directement un brouillon de réponse au client, en français, ton professionnel et chaleureux.
 
-Ton rôle : rédiger un BROUILLON de réponse à un email client, à partir UNIQUEMENT des informations du catalogue OZO fourni ci-dessous.
+Dans ta réponse : recommande 1 à 2 produits adaptés (nom, couple/tension, prix), explique en une phrase pourquoi, signe « L'équipe technique OZO Electric ». N'invente aucun produit absent du catalogue ; si l'info manque, propose de faire suivre à technique@ozo-electric.com. Termine par une ligne « SOURCES : » avec les lignes du catalogue utilisées.
 
-Règles strictes :
-- Réponds en français, ton professionnel, chaleureux et précis. Pas de bla-bla commercial excessif.
-- Recommande des produits concrets du catalogue (nom, puissance, couple, tension, prix) adaptés au besoin.
-- Explique brièvement POURQUOI (couple pour la côte/charge, tension compatible, etc.).
-- Si l'info n'est pas dans le catalogue, dis-le honnêtement et propose de faire suivre au bureau d'études (technique@ozo-electric.com) — n'invente jamais une référence ou un prix.
-- Termine par une formule de politesse signée "L'équipe technique OZO Electric".
-- À la toute fin, ajoute une ligne "SOURCES :" listant les lignes du catalogue que tu as réellement utilisées (produits/règles cités), séparées par " · ".
-
-CATALOGUE OZO (référence) :
+CATALOGUE OZO :
 ${CATALOG}`;
 
 module.exports = async function handler(req, res) {
@@ -43,9 +35,13 @@ module.exports = async function handler(req, res) {
     return;
   }
 
+  const controller = new AbortController();
+  const killTimer = setTimeout(() => controller.abort(), 55000);
+
   try {
     const upstream = await fetch(`${baseUrl}/v1/chat/completions`, {
       method: "POST",
+      signal: controller.signal,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
@@ -95,10 +91,16 @@ module.exports = async function handler(req, res) {
         } catch (_) { /* ligne SSE partielle, ignorée */ }
       }
     }
+    clearTimeout(killTimer);
     res.end();
   } catch (e) {
+    clearTimeout(killTimer);
+    const aborted = e && e.name === "AbortError";
     if (!res.headersSent) {
-      res.status(500).json({ error: "Erreur serveur", detail: String(e).slice(0, 300) });
+      res.status(aborted ? 504 : 500).json({
+        error: aborted ? "Le modèle a mis trop de temps à répondre. Réessayez." : "Erreur serveur",
+        detail: String(e).slice(0, 300),
+      });
     } else {
       res.end();
     }

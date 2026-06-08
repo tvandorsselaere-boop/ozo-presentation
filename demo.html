@@ -92,6 +92,14 @@
     .spinner { display: inline-block; width: 15px; height: 15px; border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; vertical-align: -2px; margin-right: 6px; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    .thinking { display: flex; flex-direction: column; gap: 0.7rem; padding: 0.4rem 0; }
+    .thinking .row { display: flex; align-items: center; gap: 0.6rem; color: var(--muted); font-size: 0.92rem; }
+    .spinner-d { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(var(--auto-rgb),0.25); border-top-color: var(--auto); border-radius: 50%; animation: spin .7s linear infinite; flex-shrink: 0; }
+    .ttimer { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--auto); font-size: 0.85rem; }
+    .tstep { transition: opacity .2s; }
+    .tnote { font-size: 0.78rem; color: var(--muted); opacity: 0.8; }
+    .done-tag { display:block; margin-top: 0.9rem; font-size: 0.78rem; color: var(--green); font-weight: 700; }
+
     .foot { margin-top: 2.2rem; font-size: 0.8rem; color: var(--muted); text-align: center; }
     .foot a { color: var(--accent); text-decoration: none; }
     .err { color: #c0392b; font-size: 0.88rem; }
@@ -171,12 +179,39 @@
       }
     }
 
+    function startThinking() {
+      const steps = [
+        'Lecture de la demande du client…',
+        'Recherche dans les fiches techniques OZO…',
+        'Vérification des compatibilités…',
+        'Rédaction du brouillon…'
+      ];
+      let i = 0;
+      out.innerHTML =
+        '<div class="thinking">' +
+          '<div class="row"><span class="spinner-d"></span><span class="tstep" id="tstep">' + steps[0] + '</span></div>' +
+          '<div class="row"><span class="ttimer" id="ttimer">0.0 s</span><span class="tnote">l\u2019assistant analyse vos données avant de répondre</span></div>' +
+        '</div>';
+      const t0 = Date.now();
+      const timer = setInterval(() => {
+        const el = document.getElementById('ttimer');
+        if (el) el.textContent = ((Date.now() - t0) / 1000).toFixed(1) + ' s';
+      }, 100);
+      const stepper = setInterval(() => {
+        i = Math.min(i + 1, steps.length - 1);
+        const el = document.getElementById('tstep');
+        if (el) el.textContent = steps[i];
+      }, 3500);
+      return () => { clearInterval(timer); clearInterval(stepper); return ((Date.now() - t0) / 1000).toFixed(1); };
+    }
+
     async function generate() {
       const question = q.value.trim();
       if (!question) { q.focus(); return; }
       setBusy(true);
-      out.innerHTML = '<span class="placeholder">L\u2019assistant cherche dans le catalogue…</span>';
       send.disabled = edit.disabled = redo.disabled = true;
+      const stopThinking = startThinking();
+      let elapsed = null;
       try {
         const r = await fetch('/api/draft', {
           method: 'POST',
@@ -186,22 +221,34 @@
         const ct = r.headers.get('content-type') || '';
         if (!r.ok || ct.includes('application/json')) {
           const data = await r.json().catch(() => ({}));
+          stopThinking();
           out.innerHTML = '<span class="err">' + (data.error || ('Erreur ' + r.status)) + (data.detail ? ' — ' + data.detail : '') + '</span>';
           return;
         }
         const reader = r.body.getReader();
         const decoder = new TextDecoder();
         let full = '';
-        out.textContent = '';
+        let firstToken = true;
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
-          full += decoder.decode(value, { stream: true });
+          const chunk = decoder.decode(value, { stream: true });
+          if (!chunk) continue;
+          if (firstToken) { elapsed = stopThinking(); out.textContent = ''; firstToken = false; }
+          full += chunk;
           out.textContent = full;
         }
+        if (firstToken) { stopThinking(); }
         renderDraft(full || '(réponse vide)');
+        if (full && elapsed) {
+          const tag = document.createElement('span');
+          tag.className = 'done-tag';
+          tag.textContent = 'Brouillon prêt en ' + elapsed + ' s — il ne reste qu\u2019à valider.';
+          out.appendChild(tag);
+        }
         send.disabled = edit.disabled = redo.disabled = false;
       } catch (err) {
+        stopThinking();
         out.innerHTML = '<span class="err">Connexion impossible : ' + err + '</span>';
       } finally {
         setBusy(false);
