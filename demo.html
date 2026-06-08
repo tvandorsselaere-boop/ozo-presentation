@@ -175,7 +175,7 @@
       const question = q.value.trim();
       if (!question) { q.focus(); return; }
       setBusy(true);
-      out.innerHTML = '<span class="placeholder">L\u2019assistant cherche dans le catalogue et rédige…</span>';
+      out.innerHTML = '<span class="placeholder">L\u2019assistant cherche dans le catalogue…</span>';
       send.disabled = edit.disabled = redo.disabled = true;
       try {
         const r = await fetch('/api/draft', {
@@ -183,9 +183,23 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ question })
         });
-        const data = await r.json();
-        if (!r.ok) { out.innerHTML = '<span class="err">' + (data.error || 'Erreur') + (data.detail ? ' — ' + data.detail : '') + '</span>'; return; }
-        renderDraft(data.draft || '(réponse vide)');
+        const ct = r.headers.get('content-type') || '';
+        if (!r.ok || ct.includes('application/json')) {
+          const data = await r.json().catch(() => ({}));
+          out.innerHTML = '<span class="err">' + (data.error || ('Erreur ' + r.status)) + (data.detail ? ' — ' + data.detail : '') + '</span>';
+          return;
+        }
+        const reader = r.body.getReader();
+        const decoder = new TextDecoder();
+        let full = '';
+        out.textContent = '';
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          full += decoder.decode(value, { stream: true });
+          out.textContent = full;
+        }
+        renderDraft(full || '(réponse vide)');
         send.disabled = edit.disabled = redo.disabled = false;
       } catch (err) {
         out.innerHTML = '<span class="err">Connexion impossible : ' + err + '</span>';

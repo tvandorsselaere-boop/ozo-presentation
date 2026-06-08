@@ -44,7 +44,7 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const r = await fetch(`${baseUrl}/v1/chat/completions`, {
+    const upstream = await fetch(`${baseUrl}/v1/chat/completions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,6 +55,7 @@ module.exports = async function handler(req, res) {
         temperature: 0.4,
         max_tokens: 8000,
         reasoning_effort: "low",
+        stream: true,
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           { role: "user", content: `Email reçu d'un client :\n\n"${question}"\n\nRédige le brouillon de réponse.` },
@@ -62,16 +63,44 @@ module.exports = async function handler(req, res) {
       }),
     });
 
-    if (!r.ok) {
-      const txt = await r.text();
-      res.status(502).json({ error: `Erreur du modèle (${r.status})`, detail: txt.slice(0, 500) });
+    if (!upstream.ok || !upstream.body) {
+      const txt = upstream.body ? await upstream.text() : "";
+      res.status(502).json({ error: `Erreur du modèle (${upstream.status})`, detail: txt.slice(0, 500) });
       return;
     }
 
-    const data = await r.json();
-    const draft = data?.choices?.[0]?.message?.content?.trim() || "";
-    res.status(200).json({ draft, model });
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.setHeader("Cache-Control", "no-store");
+    res.setHeader("X-Accel-Buffering", "no");
+
+    const reader = upstream.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop() || "";
+      for (const line of lines) {
+        const t = line.trim();
+        if (!t.startsWith("data:")) continue;
+        const payload = t.slice(5).trim();
+        if (payload === "[DONE]") continue;
+        try {
+          const j = JSON.parse(payload);
+          const token = j?.choices?.[0]?.delta?.content;
+          if (token) res.write(token);
+        } catch (_) { /* ligne SSE partielle, ignorée */ }
+      }
+    }
+    res.end();
   } catch (e) {
-    res.status(500).json({ error: "Erreur serveur", detail: String(e).slice(0, 300) });
+    if (!res.headersSent) {
+      res.status(500).json({ error: "Erreur serveur", detail: String(e).slice(0, 300) });
+    } else {
+      res.end();
+    }
   }
 };
