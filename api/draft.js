@@ -26,6 +26,8 @@ module.exports = async function handler(req, res) {
 
   const baseUrl = process.env.LLM_BASE_URL || "https://api.deepseek.com";
   const model = process.env.LLM_MODEL || "deepseek-chat";
+  const reasoningEffort = process.env.LLM_REASONING_EFFORT; // optionnel (ex. "low" pour opencode)
+  const disableThinking = process.env.LLM_THINKING_DISABLED === "1"; // DeepSeek direct: coupe le raisonnement
 
   let body = req.body;
   if (typeof body === "string") {
@@ -52,8 +54,9 @@ module.exports = async function handler(req, res) {
         model,
         temperature: 0.4,
         max_tokens: 8000,
-        reasoning_effort: "low",
         stream: true,
+        ...(reasoningEffort ? { reasoning_effort: reasoningEffort } : {}),
+        ...(disableThinking ? { thinking: { type: "disabled" } } : {}),
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           { role: "user", content: `Email reçu d'un client :\n\n"${question}"\n\nRédige le brouillon de réponse.` },
