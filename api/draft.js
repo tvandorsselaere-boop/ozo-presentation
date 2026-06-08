@@ -53,7 +53,7 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({
         model,
         temperature: 0.4,
-        max_tokens: 1500,
+        max_tokens: 8000,
         reasoning_effort: "low",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
