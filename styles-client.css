@@ -242,6 +242,15 @@ p + p { margin-top: 0.6rem; }
   border: 1px solid var(--note-border);
 }
 .note strong { color: var(--text); }
+.note a {
+  color: var(--pillar-auto);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 149, 0, 0.45);
+}
+.note a:hover { border-bottom-color: var(--pillar-auto); }
+
+.cover-title { font-size: clamp(2.6rem, 6.5vw, 5rem); line-height: 1.04; }
 
 /* ==============================
    ENCART "RÉSULTAT" (1 slide = 1 résultat)
