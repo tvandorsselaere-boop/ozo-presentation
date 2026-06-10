@@ -725,6 +725,32 @@ p + p { margin-top: 0.6rem; }
   font-weight: 700;
 }
 
+/* Hero cost card : prix à gauche, inclus à droite (compacte la hauteur) */
+.cost-card-hero .hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.6rem;
+  align-items: start;
+  margin-top: 0.2rem;
+}
+.cost-card-hero .hero-included {
+  border-left: 1px solid var(--border);
+  padding-left: 1.6rem;
+}
+.cost-card-hero .hero-included .incl-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 0.1rem;
+}
+.cost-card-hero .cost-desc { margin-top: 0.3rem; }
+@media (max-width: 720px) {
+  .cost-card-hero .hero-split { grid-template-columns: 1fr; gap: 0.9rem; }
+  .cost-card-hero .hero-included { border-left: none; padding-left: 0; border-top: 1px solid var(--border); padding-top: 0.9rem; }
+}
+
 /* ==============================
    TRUST CARDS (RGPD)
    ============================== */
