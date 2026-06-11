@@ -1035,6 +1035,7 @@ ul.sans li strong { font-weight: 600; color: var(--text); }
   .pipeline .step { border-right: none; border-bottom: 1px solid var(--border); }
   .pipeline .step:last-child { border-bottom: none; }
   .pipeline .step::after { display: none; }
+  .result { flex-direction: column; gap: 0.55rem; }
   .topbar-right .tag { display: none; }
   .footer-bar { flex-direction: column; gap: 0.3rem; text-align: center; }
   .footer-center { display: none; }
