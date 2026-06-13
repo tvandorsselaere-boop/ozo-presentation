@@ -3,240 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OZO × Facile-IA · 12 juin 2026 · v2 (vulgarisée)</title>
+  <title>OZO × Facile-IA · Offre révisée · juin 2026</title>
   <link rel="stylesheet" href="styles-client.css">
   <style>
-    /* Patchs locaux v2 — analogie, 3 étapes, organigramme, Hermes, avant/après */
-
-    /* Analogie : 3 cartes "comme si…" */
-    .analogy-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.95rem;
-      margin-top: 1.5rem;
-    }
-    .analogy-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.2rem 1.3rem 1.3rem;
-      box-shadow: var(--shadow-sm);
-    }
-    .analogy-card .pic {
-      font-family: "Plus Jakarta Sans", sans-serif;
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--pillar-auto);
-    }
-    .analogy-card .head {
-      font-family: "Plus Jakarta Sans", sans-serif;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-top: 0.3rem;
-      line-height: 1.3;
-    }
-    .analogy-card p {
-      font-size: 0.86rem;
-      color: var(--muted);
-      margin-top: 0.4rem;
-      line-height: 1.5;
-    }
-    .analogy-card p strong { color: var(--text); }
-
-    /* 3 grandes étapes "comment ça marche" */
-    .steps3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.85rem;
-      margin-top: 1.5rem;
-    }
-    .step3 {
-      position: relative;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 1.3rem 1.4rem 1.4rem;
-      box-shadow: var(--shadow-sm);
-    }
-    .step3::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--gradient);
-      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-    }
-    .step3 .big {
-      font-family: "Plus Jakarta Sans", sans-serif;
-      font-size: 2rem;
-      font-weight: 800;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      line-height: 1;
-    }
-    .step3 .ttl {
-      font-family: "Plus Jakarta Sans", sans-serif;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-top: 0.5rem;
-    }
-    .step3 p {
-      font-size: 0.87rem;
-      color: var(--muted);
-      margin-top: 0.4rem;
-      line-height: 1.5;
-    }
+    /* Patchs locaux — 3 étapes, organigramme, capot */
+    .steps3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.85rem; margin-top: 1.5rem; }
+    .step3 { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.3rem 1.4rem 1.4rem; box-shadow: var(--shadow-sm); }
+    .step3::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gradient); border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+    .step3 .big { font-family: "Plus Jakarta Sans", sans-serif; font-size: 2rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent; line-height: 1; }
+    .step3 .ttl { font-family: "Plus Jakarta Sans", sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--text); margin-top: 0.5rem; }
+    .step3 p { font-size: 0.87rem; color: var(--muted); margin-top: 0.4rem; line-height: 1.5; }
     .step3 p strong { color: var(--text); }
 
-    /* "Sous le capot" — petit encart technique discret */
-    .capot {
-      margin-top: 1.2rem;
-      padding: 0.85rem 1.1rem;
-      background: #f6f7f9;
-      border: 1px dashed var(--border-strong);
-      border-radius: var(--radius);
-      font-size: 0.8rem;
-      color: var(--muted-2);
-      line-height: 1.5;
-      max-width: 82ch;
-    }
+    .capot { margin-top: 1.2rem; padding: 0.85rem 1.1rem; background: #f6f7f9; border: 1px dashed var(--border-strong); border-radius: var(--radius); font-size: 0.8rem; color: var(--muted-2); line-height: 1.5; max-width: 82ch; }
     .capot strong { color: var(--muted); font-weight: 600; }
 
-    /* Vignettes "futurs assistants" — 4 colonnes */
-    .future-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0.7rem;
-      margin-top: 1.1rem;
-    }
-
-    /* ORGANIGRAMME (Hermes chef d'orchestre) */
+    /* ORGANIGRAMME */
     .orgchart { margin-top: 1.4rem; }
     .org-level { display: flex; justify-content: center; }
-    .org-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 0.85rem 1.5rem 0.9rem;
-      text-align: center;
-      box-shadow: var(--shadow-sm);
-      min-width: 260px;
-    }
-    .org-box .role-lbl {
-      font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.09em; color: var(--muted-2);
-    }
-    .org-box .role-name {
-      font-family: "Plus Jakarta Sans", sans-serif; font-weight: 700;
-      color: var(--text); font-size: 1.05rem; margin-top: 0.2rem;
-    }
-    .org-box .role-sub {
-      font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; line-height: 1.45;
-    }
+    .org-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.85rem 1.5rem 0.9rem; text-align: center; box-shadow: var(--shadow-sm); min-width: 260px; }
+    .org-box .role-lbl { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted-2); }
+    .org-box .role-name { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 700; color: var(--text); font-size: 1.05rem; margin-top: 0.2rem; }
+    .org-box .role-sub { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; line-height: 1.45; }
     .org-box.human { border-color: rgba(61, 123, 255, 0.45); background: linear-gradient(180deg, #ffffff 0%, #f3f7ff 100%); }
-    .org-box.chief {
-      border-color: rgba(255, 149, 0, 0.55);
-      background: linear-gradient(180deg, #ffffff 0%, #fff7ed 100%);
-      box-shadow: 0 0 16px rgba(255, 149, 0, 0.12), var(--shadow-md);
-      min-width: 320px;
-    }
+    .org-box.chief { border-color: rgba(255, 149, 0, 0.55); background: linear-gradient(180deg, #ffffff 0%, #fff7ed 100%); box-shadow: 0 0 16px rgba(255, 149, 0, 0.12), var(--shadow-md); min-width: 320px; }
     .org-box.chief .role-name { font-size: 1.15rem; }
     .org-connector { width: 2px; height: 24px; background: var(--border-strong); margin: 0.25rem auto; }
-    .org-agents {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 0.7rem; margin-top: 0;
-    }
-    .org-agent {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 0.75rem 0.9rem 0.8rem; text-align: center;
-      box-shadow: var(--shadow-sm);
-    }
+    .org-agents { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; margin-top: 0; }
+    .org-agent { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.75rem 0.9rem 0.8rem; text-align: center; box-shadow: var(--shadow-sm); }
     .org-agent.soon { border-style: dashed; background: #fbfbfc; }
-    .org-agent .n {
-      font-family: "Plus Jakarta Sans", sans-serif; font-weight: 700;
-      font-size: 0.92rem; color: var(--text);
-    }
+    .org-agent .n { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 700; font-size: 0.92rem; color: var(--text); }
     .org-agent .p { font-size: 0.72rem; color: var(--muted); margin-top: 0.2rem; line-height: 1.35; }
-    .org-agent .ph {
-      display: inline-block; font-size: 0.58rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.04em; margin-top: 0.4rem; padding: 0.1rem 0.4rem; border-radius: 4px;
-      color: var(--pillar-auto); background: rgba(255, 149, 0, 0.1);
-    }
+    .org-agent .ph { display: inline-block; font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 0.4rem; padding: 0.1rem 0.4rem; border-radius: 4px; color: var(--pillar-auto); background: rgba(255, 149, 0, 0.1); }
     .org-agent.soon .ph { color: var(--violet); background: rgba(139, 92, 246, 0.1); }
 
-    /* Hermes : 4 atouts (repris why-grid) */
-    .why-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 0.85rem; margin-top: 1.4rem;
-    }
-    .why-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 1.05rem 1.15rem 1.2rem; box-shadow: var(--shadow-sm);
-    }
-    .why-card.star { border-color: rgba(255, 149, 0, 0.45); background: linear-gradient(180deg, #ffffff 0%, #fff7ed 100%); }
-    .why-card .ic {
-      font-family: "Plus Jakarta Sans", sans-serif; font-size: 1.3rem; font-weight: 800;
-      background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent; line-height: 1;
-    }
-    .why-card .name {
-      font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.98rem; font-weight: 700;
-      color: var(--text); margin-top: 0.45rem;
-    }
-    .why-card p { font-size: 0.81rem; color: var(--muted); margin-top: 0.35rem; line-height: 1.5; }
-    .why-card p strong { color: var(--text); }
-
-    /* Comparatif avant / après */
-    .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.95rem; margin-top: 1.5rem; }
-    .ba-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.35rem 1.3rem; box-shadow: var(--shadow-sm); }
-    .ba-card.before { border-left: 3px solid var(--border-strong); }
-    .ba-card.after  { border-left: 3px solid var(--pillar-auto); background: linear-gradient(180deg, #ffffff 0%, #fff7ed 100%); }
-    .ba-card .tag-ba { font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.22rem 0.6rem; border-radius: 999px; }
-    .ba-card.before .tag-ba { color: var(--muted); background: #eef0f2; }
-    .ba-card.after  .tag-ba { color: var(--pillar-auto); background: rgba(255,149,0,0.12); }
-    .ba-card ul { list-style: none; padding: 0; margin: 0.8rem 0 0; }
-    .ba-card ul li { font-size: 0.88rem; color: var(--muted); padding: 0.3rem 0 0.3rem 1.4rem; position: relative; line-height: 1.45; }
-    .ba-card.before ul li::before { content: "✗"; position: absolute; left: 0; color: var(--muted-2); font-weight: 700; }
-    .ba-card.after  ul li::before { content: "✓"; position: absolute; left: 0; color: var(--pillar-seo); font-weight: 700; }
-    .ba-card ul li strong { color: var(--text); }
-
-    /* Phase timeline */
-    .phase-timeline { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.05rem; }
-    .phase-row { display: grid; grid-template-columns: 78px 1fr; gap: 0.7rem; align-items: stretch; }
-    .phase-marker {
-      display: flex; align-items: center; justify-content: center;
-      font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.92rem; font-weight: 800;
-      color: var(--pillar-auto); background: linear-gradient(135deg, #ffffff 0%, #fff7ed 100%);
-      border: 1px solid rgba(255, 149, 0, 0.32); border-radius: var(--radius);
-      padding: 0.45rem 0.35rem; text-align: center;
-    }
-    .phase-card {
-      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 0.78rem 1.05rem 0.85rem; box-shadow: var(--shadow-sm);
-      border-left-width: 3px; border-left-style: solid;
-    }
-    .phase-card.p0 { border-left-color: var(--accent); }
-    .phase-card.p1 { border-left-color: var(--pillar-auto); }
-    .phase-card.p15 { border-left-color: #06b6d4; }
-    .phase-card.p2 { border-left-color: #10B981; }
-    .phase-card.p2plus { border-left-color: #8b5cf6; }
-    .phase-name {
-      font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.95rem; font-weight: 700;
-      color: var(--text); display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; line-height: 1.3;
-    }
-    .phase-dur {
-      font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
-      color: var(--pillar-auto); background: rgba(255, 149, 0, 0.1); padding: 0.18rem 0.5rem; border-radius: 4px;
-    }
-    .phase-deliver { font-size: 0.84rem; color: var(--muted); margin-top: 0.35rem; line-height: 1.5; }
-    .phase-deliver strong { color: var(--text); font-weight: 600; }
-
-    /* Calendrier horizontal (slide 13) */
+    /* Calendrier horizontal */
     .cal { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.4rem; margin-top: 1.6rem; position: relative; }
     .cal::before { content: ""; position: absolute; top: 8px; left: 10%; right: 10%; height: 2px; background: var(--border-strong); z-index: 0; }
     .cal-step { position: relative; z-index: 1; text-align: center; padding: 0 0.5rem; }
@@ -247,15 +48,9 @@
     .cal-ttl { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--text); margin-top: 0.25rem; line-height: 1.25; }
     .cal-txt { font-size: 0.8rem; color: var(--muted); margin-top: 0.4rem; line-height: 1.45; }
 
-    @media (max-width: 1100px) {
-      .why-grid, .future-grid { grid-template-columns: repeat(2, 1fr); }
-    }
     @media (max-width: 720px) {
-      .analogy-grid, .steps3, .ba-grid, .why-grid, .future-grid,
-      .org-agents { grid-template-columns: 1fr; }
+      .steps3, .org-agents { grid-template-columns: 1fr; }
       .org-box, .org-box.chief { min-width: 0; width: 100%; }
-      .phase-row { grid-template-columns: 1fr; }
-      .phase-marker { padding: 0.3rem; font-size: 0.85rem; }
       .cal { grid-template-columns: 1fr; gap: 1rem; }
       .cal::before { display: none; }
       .cal-dot { margin: 0; }
@@ -269,8 +64,8 @@
     <div class="topbar-inner">
       <div class="logo">Facile-<span>IA</span> × OZO</div>
       <div class="topbar-right">
-        <span class="tag">Présentation · 12 juin 2026</span>
-        <span class="counter"><strong id="cur">1</strong> / <span id="tot">13</span></span>
+        <span class="tag">Offre révisée · juin 2026</span>
+        <span class="counter"><strong id="cur">1</strong> / <span id="tot">6</span></span>
       </div>
     </div>
     <div class="progress-track"><div class="progress-bar" id="progress"></div></div>
@@ -280,135 +75,44 @@
 
     <!-- 1. Cover -->
     <section class="slide" id="slide-1">
-      <div class="slide-num">01 / 13</div>
+      <div class="slide-num">01 / 06</div>
       <div class="slide-inner">
         <p class="story-label gradient" style="font-size:clamp(1.8rem,4vw,3rem);text-transform:none;letter-spacing:-0.025em;font-weight:800;margin-bottom:0.5rem;">OZO × Facile-IA</p>
-        <h1 class="gradient cover-title" style="font-size:clamp(1.4rem,3vw,2.2rem);font-weight:600;">Une équipe<br>qui ne dort jamais</h1>
-        <p class="lead">Une équipe d'assistants numériques sur-mesure pour OZO, pilotée par un chef d'orchestre. Ils préparent le travail répétitif, <strong>vous validez d'un clic</strong>, vous gardez la main.</p>
-        <p class="note"><strong>Au programme —</strong> ce que vous m'avez dit lors de notre échange du 4 juin · l'idée en une phrase · comment ça marche · vos assistants · le chef d'orchestre · ce que vous gardez sous contrôle · coûts · calendrier.</p>
+        <h1 class="gradient cover-title" style="font-size:clamp(1.4rem,3vw,2.2rem);font-weight:600;">Une équipe d'assistants,<br>un forfait simple</h1>
+        <p class="lead">Suite à notre échange : une équipe d'assistants numériques sur-mesure pour OZO, pilotée par un chef d'orchestre. Ils préparent le travail répétitif, <strong>vous validez d'un clic</strong>, vous gardez la main.</p>
+        <p class="note"><strong>Au programme —</strong> vos assistants · votre interface · vos données (souveraineté &amp; RGPD) · <strong>le budget révisé</strong> · la suite.</p>
+        <p class="note"><strong>Nouveau depuis notre point —</strong> un <strong>forfait mensuel fixe qui ne grimpe plus assistant par assistant</strong>, et la création de chaque assistant réglée une seule fois, à l'acte.</p>
       </div>
     </section>
 
-    <!-- 2. Douleurs -->
-    <section class="slide" id="slide-2">
-      <div class="slide-num">02 / 13</div>
+    <!-- 2. Vos assistants -->
+    <section class="slide tall" id="slide-2">
+      <div class="slide-num">02 / 06</div>
       <div class="slide-inner">
-        <p class="story-label">Résumé · call 4 juin</p>
-        <h1>Là où vous perdez<br>le plus de temps</h1>
-        <p class="lead">Ce qui ressort de notre échange : du volume répétitif, une équipe en sous-effectif, des tâches à forte valeur qui passent à la trappe.</p>
-        <div class="pain-grid">
-          <div class="pain-card">
-            <div class="pain-num">10<span class="unit">min</span></div>
-            <div class="pain-label">par mail technique complexe</div>
-            <div class="pain-sub"><strong>9 mails sur 10 reviennent toujours</strong> sur les mêmes sujets — confirmé le 4/06. Idéal pour un brouillon préparé à l'avance.</div>
-          </div>
-          <div class="pain-card">
-            <div class="pain-num">500<span class="unit">comptes</span></div>
-            <div class="pain-label">clients vélo endormis</div>
-            <div class="pain-sub">+ 80 bons clients à choyer. Un vivier à réveiller intelligemment, pas du mailing de masse.</div>
-          </div>
-          <div class="pain-card">
-            <div class="pain-num">5<span class="unit">à 20</span></div>
-            <div class="pain-label">devis non relancés</div>
-            <div class="pain-sub">Des affaires qui dorment, <strong>faute de temps et des oublis de relance</strong>.</div>
-          </div>
-        </div>
-        <div class="result">
-          <span class="label">L'enjeu</span>
-          <span class="txt">Tout ce temps « administratif » est du temps en moins sur la R&D, le SAV de fond et la relation client. <strong>C'est exactement ce qu'on automatise.</strong></span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. L'idée en une phrase (analogie) -->
-    <section class="slide" id="slide-3">
-      <div class="slide-num">03 / 13</div>
-      <div class="slide-inner">
-        <p class="story-label">L'idée en une phrase</p>
+        <p class="story-label">Votre équipe · pilotée par un chef d'orchestre</p>
         <h1>Des assistants formés à OZO,<br>pas un logiciel de plus</h1>
-        <p class="lead">Imaginez des collègues qui connaissent vos produits par cœur, travaillent la nuit, et <strong>ne décident jamais à votre place</strong>. Voilà ce qu'on installe.</p>
-        <div class="analogy-grid">
-          <div class="analogy-card">
-            <div class="pic">Comme…</div>
-            <div class="head">Un assistant qui a lu toutes vos fiches techniques</div>
-            <p>Il connaît vos moteurs 36/48/52V, vos batteries, vos garanties. Il <strong>cite toujours sa source</strong> et dit quand il ne sait pas.</p>
-          </div>
-          <div class="analogy-card">
-            <div class="pic">Comme…</div>
-            <div class="head">Un commercial qui n'oublie jamais une relance</div>
-            <p>Il suit chaque devis, repère les clients endormis, prépare des messages personnalisés. <strong>Vous validez avant tout envoi.</strong></p>
-          </div>
-          <div class="analogy-card">
-            <div class="pic">Comme…</div>
-            <div class="head">Un chef d'équipe qui orchestre et rend compte</div>
-            <p>Il répartit le travail entre les assistants, suit l'avancement et vous fait un point clair sur <strong>votre tableau de bord</strong>. Vous gardez la vue d'ensemble.</p>
-          </div>
-        </div>
-        <div class="result">
-          <span class="label">La différence</span>
-          <span class="txt">Ces assistants sont <strong>à vous</strong> : leurs connaissances, votre config, vos données restent sur vos serveurs.</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. Comment ça marche en 3 étapes -->
-    <section class="slide" id="slide-4">
-      <div class="slide-num">04 / 13</div>
-      <div class="slide-inner">
-        <p class="story-label">Comment ça marche · en 3 étapes</p>
-        <h1>Simple à utiliser,<br>même sans rien y connaître</h1>
-        <p class="lead">Tout passe par un outil que vous avez déjà : <strong>votre téléphone</strong>. Pas de nouvelle appli à apprendre, pas d'écran compliqué.</p>
-        <div class="steps3">
-          <div class="step3">
-            <div class="big">1</div>
-            <div class="ttl">L'assistant prépare</div>
-            <p>Un mail arrive, ou c'est lundi matin : l'assistant rédige un <strong>brouillon</strong> à partir de vos fiches et de votre historique. Tout seul.</p>
-          </div>
-          <div class="step3">
-            <div class="big">2</div>
-            <div class="ttl">Vous recevez la notification</div>
-            <p>Le brouillon arrive sur votre <strong>tableau de bord OZO</strong> — aussi sur votre téléphone — avec 3 boutons : <strong>Envoyer · Modifier · Refaire</strong>. Vous lisez en 10 secondes.</p>
-          </div>
-          <div class="step3">
-            <div class="big">3</div>
-            <div class="ttl">Vous validez, c'est parti</div>
-            <p>Un clic et c'est envoyé. <strong>Rien ne part sans votre accord.</strong> Chaque brouillon et votre version finale sont enregistrés : l'assistant <strong>s'améliore à chaque correction</strong> et vous recevez un <strong>rapport mensuel</strong> (temps gagné, sujets fréquents).</p>
-          </div>
-        </div>
-        <div class="capot">
-          <strong>Sous le capot (pour info) —</strong> les brouillons sont produits par des modèles d'IA récents, choisis tâche par tâche pour le meilleur rapport qualité/coût, le tout coordonné par Hermes, un socle libre et gratuit (voir slide suivante). Aucun nom de logiciel à retenir de votre côté.
-        </div>
-      </div>
-    </section>
-
-    <!-- 5. Hermes, le chef d'orchestre (organigramme) -->
-    <section class="slide tall" id="slide-6">
-      <div class="slide-num">05 / 13</div>
-      <div class="slide-inner">
-        <p class="story-label">Le chef d'orchestre · Hermes</p>
-        <h1>Un chef qui coordonne<br>toute l'équipe</h1>
-        <p class="lead">Vos assistants ne travaillent pas dans le désordre. <strong>Hermes</strong> reçoit tout ce qui entre, l'envoie au bon assistant, suit l'avancement et vous alerte. C'est l'organigramme de votre équipe numérique.</p>
+        <p class="lead">Des collègues numériques qui connaissent vos produits par cœur et <strong>ne décident jamais à votre place</strong>. <strong>Hermes</strong>, le chef d'orchestre, reçoit tout, l'envoie au bon assistant, et vous alerte.</p>
         <div class="orgchart">
           <div class="org-level">
             <div class="org-box human">
               <div class="role-lbl">Direction · vous décidez</div>
               <div class="role-name">Élodie &amp; JP</div>
-              <div class="role-sub">Validation finale, go/no-go, priorités. Rien ne part sans votre clic.</div>
+              <div class="role-sub">Validation finale, go/no-go. Rien ne part sans votre clic.</div>
             </div>
           </div>
           <div class="org-connector"></div>
           <div class="org-level">
             <div class="org-box chief">
-              <div class="role-lbl">Chef d'orchestre · joignable via votre tableau de bord OZO</div>
+              <div class="role-lbl">Chef d'orchestre · votre interface OZO</div>
               <div class="role-name">Hermes</div>
-              <div class="role-sub">Reçoit mails &amp; tâches → dispatche au bon assistant → suit le tableau de bord → vous alerte (devis à relancer, urgences). Vous le pilotez depuis <strong>votre interface OZO</strong>, sur ordinateur comme sur téléphone.</div>
+              <div class="role-sub">Reçoit mails &amp; tâches → dispatche → suit → vous alerte. Pilotable sur ordinateur comme sur téléphone.</div>
             </div>
           </div>
           <div class="org-connector"></div>
           <div class="org-agents">
             <div class="org-agent">
               <div class="n">Mails techniques</div>
-              <div class="p">Brouillons SAV + sources</div>
+              <div class="p">Brouillons SAV + sources citées</div>
               <div class="ph">Phase 1</div>
             </div>
             <div class="org-agent">
@@ -417,363 +121,190 @@
               <div class="ph">Phase 1</div>
             </div>
             <div class="org-agent soon">
-              <div class="n">Prospection</div>
-              <div class="p">Vélo + industrie</div>
-              <div class="ph">Phase 2+</div>
+              <div class="n">Contenu &amp; blog</div>
+              <div class="p">Trouve les idées, rédige posts &amp; articles — vous validez</div>
+              <div class="ph">Phase 2</div>
             </div>
             <div class="org-agent soon">
-              <div class="n">Contenu &amp; réseaux</div>
-              <div class="p">Posts + visuels</div>
-              <div class="ph">Phase 2+</div>
+              <div class="n">Prospection</div>
+              <div class="p">Nouveaux comptes vélo + industrie</div>
+              <div class="ph">Phase 2</div>
             </div>
             <div class="org-agent soon">
               <div class="n">Chatbot site</div>
               <div class="p">Guide d'achat + FAQ</div>
-              <div class="ph">Phase 2+</div>
+              <div class="ph">Phase 2</div>
             </div>
             <div class="org-agent soon">
               <div class="n">Veille marché</div>
-              <div class="p">Actu vélo/batterie</div>
-              <div class="ph">Phase 2+</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 6. Pourquoi Hermes (le top) -->
-    <section class="slide" id="slide-7">
-      <div class="slide-num">06 / 13</div>
-      <div class="slide-inner">
-        <p class="story-label">Pourquoi Hermes, et pas un autre</p>
-        <h1>La meilleure fondation<br>du marché en 2026</h1>
-        <p class="lead">On a choisi <strong>Hermes</strong> parce que c'est aujourd'hui la référence mondiale des équipes d'agents — et surtout le seul qui <strong>apprend tout seul</strong> de vos corrections.</p>
-        <div class="why-grid">
-          <div class="why-card star">
-            <div class="ic">★</div>
-            <div class="name">Il apprend tout seul</div>
-            <p>À chaque correction que vous faites, il <strong>retient et s'améliore</strong>. Au bout de quelques semaines, il a vos réflexes et votre ton.</p>
-          </div>
-          <div class="why-card">
-            <div class="ic">184k</div>
-            <div class="name">Standard mondial</div>
-            <p>184 000 développeurs l'utilisent. Vous misez sur un <strong>standard durable</strong>, pas sur une mode qui disparaît dans 6 mois.</p>
-          </div>
-          <div class="why-card">
-            <div class="ic">0 €</div>
-            <div class="name">Libre &amp; sans verrou</div>
-            <p>Gratuit et ouvert (licence MIT). <strong>Vos données restent les vôtres</strong>, dans un format standard et portable.</p>
-          </div>
-          <div class="why-card">
-            <div class="ic">⚡</div>
-            <div class="name">Le bon modèle au bon moment</div>
-            <p>Il choisit, tâche par tâche, le meilleur cerveau IA pour <strong>la qualité au meilleur coût</strong>. Pas dépendant d'un seul fournisseur.</p>
-          </div>
-        </div>
-        <div class="result">
-          <span class="label">Ce que ça change pour vous</span>
-          <span class="txt"><strong>Vos assistants deviennent meilleurs avec le temps</strong>, sans payer plus. Plus vous les utilisez, plus ils collent à OZO.</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 7. Focus mails techniques -->
-    <section class="slide tall" id="slide-8">
-      <div class="slide-num">07 / 13</div>
-      <div class="slide-inner">
-        <p class="story-label">Focus · priorité n°1</p>
-        <div class="focus-agent">
-          <span class="focus-badge">Phase 1 · démarrage</span>
-          <h2>L'assistant mails techniques</h2>
-          <p class="focus-lead">Un mail SAV arrive → l'assistant cherche dans vos fiches techniques → il rédige un brouillon <strong>avec les sources citées</strong> → vous recevez la notif sur le tableau de bord → <strong>envoi en un clic</strong>.</p>
-          <div class="pipeline">
-            <div class="step"><span class="ico">Entrée</span><span class="lbl">Mail client</span></div>
-            <div class="step"><span class="ico">Recherche</span><span class="lbl">Vos fiches techniques</span></div>
-            <div class="step"><span class="ico">Brouillon</span><span class="lbl">Réponse + sources</span></div>
-            <div class="step"><span class="ico">Validation</span><span class="lbl">Notif tableau de bord</span></div>
-            <div class="step"><span class="ico">Envoi</span><span class="lbl">En un clic</span></div>
-          </div>
-          <div class="subflows">
-            <div class="subflow">
-              <h4>Ce qu'il lit</h4>
-              <p>Fiches techniques, datasheets, courbes, vos réponses-types.</p>
-            </div>
-            <div class="subflow">
-              <h4>Exemples</h4>
-              <p>« Quelle datasheet pour ce moteur ? » · couple moteur · 800 kg à 10 km/h.</p>
-            </div>
-            <div class="subflow">
-              <h4>Garde-fous</h4>
-              <p>Relecture JP à 100% au démarrage. Sources citées à chaque réponse.</p>
-            </div>
-          </div>
-        </div>
-        <p class="note"><strong>Démo live —</strong> <a href="https://ozo-presentation.vercel.app/demo.html" target="_blank" rel="noopener">Essayer l'assistant mails techniques →</a></p>
-        <div class="result">
-          <span class="label">Résultat</span>
-          <span class="txt"><strong>10 min → 1 min par mail technique.</strong> Le temps revient sur la R&D et le vrai SAV de fond.</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 8. Focus commercial -->
-    <section class="slide" id="slide-9">
-      <div class="slide-num">08 / 13</div>
-      <div class="slide-inner">
-        <p class="story-label">Focus · priorité n°2</p>
-        <div class="focus-agent">
-          <span class="focus-badge">Phase 1</span>
-          <h2>L'assistant relances commerciales</h2>
-          <p class="focus-lead">Il épaule vos 4 commerciaux sur trois fronts : <strong>relancer les devis</strong>, <strong>réveiller les 500 endormis</strong>, <strong>suivre les 80 bons clients</strong>. Toujours validé avant envoi.</p>
-          <div class="subflows">
-            <div class="subflow">
-              <h4>A · Relances devis</h4>
-              <p>J+7, J+14, J+30 — trois messages différents, jamais le même copier-coller.</p>
-            </div>
-            <div class="subflow">
-              <h4>B · 500 endormis</h4>
-              <p>Messages personnalisés selon l'ancienneté et le panier de chaque client.</p>
-            </div>
-            <div class="subflow">
-              <h4>C · 80 bons clients</h4>
-              <p>Résumé mensuel du chiffre · proposition produit ou opération dédiée.</p>
+              <div class="p">Actu vélo/batterie · brief hebdo</div>
+              <div class="ph">Phase 2</div>
             </div>
           </div>
         </div>
         <div class="result">
-          <span class="label">Résultat</span>
-          <span class="txt"><strong>Plus aucun devis oublié, plus aucun bon client négligé.</strong> 50 relances préparées en 30 min au lieu d'une journée. <strong>Aucun mail sans votre OK.</strong></span>
+          <span class="label">L'assistant Contenu</span>
+          <span class="txt">Il <strong>trouve les idées</strong>, oriente la com sur vos réseaux et <strong>rédige le blog tout seul</strong>. Vous validez étape par étape — <strong>vous n'écrivez rien</strong>.</span>
         </div>
       </div>
     </section>
 
-    <!-- 9. Vous gardez la main + données -->
-    <section class="slide" id="slide-10">
-      <div class="slide-num">09 / 13</div>
+    <!-- 3. Votre interface -->
+    <section class="slide" id="slide-3">
+      <div class="slide-num">03 / 06</div>
+      <div class="slide-inner">
+        <p class="story-label">Votre interface · simple, sur votre téléphone</p>
+        <h1>Une seule appli,<br>chacun ses fonctions</h1>
+        <p class="lead">Tout passe par un outil que vous avez déjà : <strong>votre compte Google</strong>. Vous vous connectez, et chacun (JP, Élo, Micka) voit <strong>uniquement ses tâches</strong>.</p>
+        <div class="steps3">
+          <div class="step3">
+            <div class="big">1</div>
+            <div class="ttl">L'assistant prépare</div>
+            <p>Un mail arrive, ou c'est lundi matin : l'assistant rédige un <strong>brouillon</strong> à partir de vos fiches et de votre historique. Tout seul.</p>
+          </div>
+          <div class="step3">
+            <div class="big">2</div>
+            <div class="ttl">Vous êtes alerté</div>
+            <p>Le brouillon arrive sur votre interface — aussi sur téléphone — avec 3 boutons : <strong>Envoyer · Modifier · Refaire</strong>. Vous lisez en 10 secondes.</p>
+          </div>
+          <div class="step3">
+            <div class="big">3</div>
+            <div class="ttl">Vous validez, c'est parti</div>
+            <p>Un clic et c'est envoyé. <strong>Rien ne part sans votre accord.</strong> L'assistant <strong>s'améliore à chaque correction</strong> et vous recevez un <strong>bilan mensuel automatique</strong>.</p>
+          </div>
+        </div>
+        <p class="note"><strong>Démo live —</strong> <a href="https://ozo-presentation.vercel.app/demo.html" target="_blank" rel="noopener">Essayer l'assistant mails techniques →</a> (le lien que je vous ai laissé reste actif)</p>
+        <div class="capot">
+          <strong>Connexion —</strong> chacun se connecte avec son compte Google OZO. Pas de mot de passe à gérer, et les droits de chacun sont réglés depuis la même appli.
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Vos données / souveraineté -->
+    <section class="slide" id="slide-4">
+      <div class="slide-num">04 / 06</div>
       <div class="slide-inner">
         <p class="story-label">Le point qui compte le plus</p>
         <h1>Vous gardez la main,<br>vos données restent chez vous</h1>
-        <p class="lead">C'est notre règle non négociable : l'IA <strong>propose</strong>, vous <strong>décidez</strong>. Vos données sont stockées chez vous, en Europe ; seul le <strong>texte d'une demande</strong> est confié à un modèle d'IA, le temps de préparer un brouillon.</p>
+        <p class="lead">Notre règle non négociable : l'IA <strong>propose</strong>, vous <strong>décidez</strong>. Vos données restent chez vous, en Europe. C'est la vraie différence avec un abonnement tout-fait.</p>
         <div class="trust-grid">
           <div class="trust-card">
             <div class="name">Validation systématique</div>
-            <p>Chaque mail, chaque relance passe par votre clic. <strong>Zéro envoi automatique</strong> en phase 1.</p>
+            <p>Chaque mail, chaque relance passe par votre clic. <strong>Zéro envoi automatique.</strong></p>
           </div>
           <div class="trust-card">
-            <div class="name">Stockage chez vous, en Europe</div>
-            <p>Fiches, clients, historique restent sur <strong>vos serveurs (UE)</strong>. Pour rédiger, le texte d'une demande passe par un modèle d'IA qui le traite puis l'oublie : <strong>rien n'est réutilisé pour entraîner l'IA</strong>. L'apprentissage de vos assistants, lui, reste local, chez vous, et ne conserve aucune donnée nominative. Sur les sujets sensibles, on peut imposer des modèles hébergés en Europe.</p>
+            <div class="name">Vos données en Europe</div>
+            <p>Fiches, clients, historique restent sur <strong>vos serveurs (UE)</strong>. <strong>Rien n'est réutilisé pour entraîner l'IA.</strong> La mise en conformité RGPD est <strong>incluse</strong>.</p>
           </div>
           <div class="trust-card">
-            <div class="name">Rien n'est verrouillé</div>
-            <p>Solution ouverte (libre). Votre configuration et vos données restent sur vos serveurs, <strong>dans un format standard</strong>.</p>
+            <div class="name">Un actif à vous, pas une location</div>
+            <p>Solution ouverte (libre). Vos assistants, leur savoir et vos données vous appartiennent, <strong>dans un format standard</strong>. Pas de verrou.</p>
           </div>
         </div>
-        <p class="note"><strong>RGPD · ce qu'on traite selon la sensibilité —</strong>
-          <strong>Sensible</strong> (fichier clients, devis, historique, relances) : stocké en Europe, accès limité, jamais utilisé pour entraîner l'IA.
-          <strong>Modéré</strong> (texte d'un mail SAV) : seul l'extrait utile passe au modèle, le temps du brouillon.
-          <strong>Peu sensible</strong> (catalogue, specs, prix) : base de connaissance interne, sans donnée personnelle.
-          La <strong>mise en conformité RGPD est incluse dans la prestation</strong> — pas un audit facturé à part.</p>
         <div class="result">
-          <span class="label">Résultat</span>
-          <span class="txt"><strong>Vous restez propriétaire de tout</strong> : les assistants, leurs connaissances, vos données. On vous fait gagner du temps sans vous déposséder.</span>
+          <span class="label">La différence</span>
+          <span class="txt">Un abonnement type Limova, c'est une <strong>équipe générique louée</strong>. Ici, vous <strong>possédez</strong> des assistants sur-mesure, branchés sur vos outils et vos règles.</span>
         </div>
       </div>
     </section>
 
-    <!-- 10. Avant / Après -->
-    <section class="slide" id="slide-11">
-      <div class="slide-num">10 / 13</div>
-      <div class="slide-inner">
-        <p class="story-label">Ce que ça change concrètement</p>
-        <h1>Une journée OZO,<br>avant et après</h1>
-        <p class="lead">Pas de promesse en l'air. Voici, très concrètement, ce qui change dans votre quotidien dès le premier mois.</p>
-        <div class="ba-grid">
-          <div class="ba-card before">
-            <span class="tag-ba">Aujourd'hui</span>
-            <ul>
-              <li>10 min sur un mail technique, à chercher la bonne fiche</li>
-              <li>Des devis qui dorment faute de temps pour relancer</li>
-              <li>500 clients endormis qu'on n'a jamais le temps de réveiller</li>
-              <li>La boîte mail qui déborde, les urgences noyées</li>
-              <li>Le commercial et la technique débordés en même temps</li>
-            </ul>
-          </div>
-          <div class="ba-card after">
-            <span class="tag-ba">Avec vos assistants</span>
-            <ul>
-              <li>Un brouillon prêt en <strong>moins de 1 min</strong>, sources citées</li>
-              <li>Relances <strong>automatiques J+7/14/30</strong>, validées d'un clic</li>
-              <li>Les 500 endormis recontactés <strong>par vagues personnalisées</strong></li>
-              <li>Un <strong>résumé du matin</strong> avec les urgences en tête</li>
-              <li>L'équipe se concentre sur la <strong>R&D et le vrai conseil</strong></li>
-            </ul>
-          </div>
-        </div>
-        <div class="result">
-          <span class="label">Résultat</span>
-          <span class="txt"><strong>≈ 25 h/mois économisées par personne</strong> sur les tâches répétitives. On installe un compteur dès la 1ère semaine pour le mesurer ensemble.</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 11. L'équipe qui grandit (timeline) -->
+    <!-- 5. Le budget révisé -->
     <section class="slide tall" id="slide-5">
-      <div class="slide-num">11 / 13</div>
+      <div class="slide-num">05 / 06</div>
       <div class="slide-inner">
-        <p class="story-label">L'équipe · une arrivée par mois</p>
-        <h1 style="font-size:clamp(1.5rem,3.2vw,2.4rem);">On démarre à deux,<br>puis un assistant par mois</h1>
-        <p class="lead">Le pack de départ couvre vos 2 priorités. Ensuite, on ajoute <strong>un assistant par mois</strong> — chacun seulement quand le précédent a prouvé sa valeur. Vous gardez la main sur le rythme.</p>
-        <div class="phase-timeline">
-          <div class="phase-row">
-            <div class="phase-marker">Départ</div>
-            <div class="phase-card p1">
-              <div class="phase-name">2 assistants + chef d'orchestre + tableau de bord OZO <span class="phase-dur">pack initial</span></div>
-              <div class="phase-deliver"><strong>Mails techniques</strong> (brouillons SAV + sources) et <strong>relances commerciales</strong> (devis · 500 endormis · 80 bons clients), pilotés depuis votre interface OZO.</div>
-            </div>
-          </div>
-          <div class="phase-row">
-            <div class="phase-marker">+1 mois</div>
-            <div class="phase-card p2">
-              <div class="phase-name">+ Prospection <span class="phase-dur">1 assistant</span></div>
-              <div class="phase-deliver">Nouveaux comptes vélo + industrie (RSE, pénibilité, logistique).</div>
-            </div>
-          </div>
-          <div class="phase-row">
-            <div class="phase-marker">+1 mois</div>
-            <div class="phase-card p2">
-              <div class="phase-name">+ Contenu &amp; réseaux <span class="phase-dur">1 assistant</span></div>
-              <div class="phase-deliver">Posts et visuels depuis vos photos d'atelier.</div>
-            </div>
-          </div>
-          <div class="phase-row">
-            <div class="phase-marker">+1 mois</div>
-            <div class="phase-card p2">
-              <div class="phase-name">+ Chatbot site <span class="phase-dur">1 assistant</span></div>
-              <div class="phase-deliver">Guide d'achat + FAQ sur ozo-electric.com.</div>
-            </div>
-          </div>
-          <div class="phase-row">
-            <div class="phase-marker">+1 mois</div>
-            <div class="phase-card p2plus">
-              <div class="phase-name">+ Veille marché <span class="phase-dur">1 assistant</span></div>
-              <div class="phase-deliver">Actu vélo/batterie · résumé hebdo le lundi.</div>
-            </div>
-          </div>
-          <div class="phase-row">
-            <div class="phase-marker">À la carte</div>
-            <div class="phase-card p2plus" style="border-left-style:dashed;">
-              <div class="phase-name">+ D'autres assistants, selon vos besoins <span class="phase-dur">quand vous voulez</span></div>
-              <div class="phase-deliver">Ex. <strong>blog &amp; articles SEO</strong> (rédaction de contenus), suivi après-vente, devis chiffrés… On en ajoute autant que vous le souhaitez, chiffrés au cas par cas.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 12. Budget -->
-    <section class="slide tall" id="slide-12">
-      <div class="slide-num">12 / 13</div>
-      <div class="slide-inner">
-        <p class="story-label">Le budget · simple et lisible</p>
-        <h1>Votre offre de départ,<br>puis un assistant à la fois</h1>
-        <p class="lead">Une mise en place, un forfait mensuel tout compris, et ensuite un montant fixe par assistant ajouté. <strong>Uniquement vos assistants IA</strong> — le SEO et le site restent chez vos prestataires actuels.</p>
+        <p class="story-label">Le budget · révisé suite à notre point</p>
+        <h1>Un forfait fixe,<br>qui ne grimpe pas par assistant</h1>
+        <p class="lead">Une mise en place une seule fois, puis un <strong>forfait mensuel tout compris</strong> qui reste stable même quand l'équipe s'agrandit. La création de chaque assistant se règle <strong>à l'acte</strong>.</p>
         <div class="cost-grid">
           <div class="cost-card cost-card-hero" style="grid-column:span 2;border-color:rgba(255,149,0,0.45);background:linear-gradient(180deg,#ffffff 0%,#fff7ed 100%);">
-            <span class="cost-badge" style="color:var(--pillar-auto);background:rgba(255,149,0,0.12);">Votre offre de départ · tout de suite</span>
+            <span class="cost-badge" style="color:var(--pillar-auto);background:rgba(255,149,0,0.12);">Votre offre de départ</span>
             <div class="hero-split">
               <div class="hero-prices">
                 <div class="cost-note" style="text-decoration:line-through;opacity:.55;">Mise en place · 7 500 € · ≈ 75 h de travail</div>
                 <div class="cost-price">2 499 €<span class="per">mise en place · une seule fois</span></div>
-                <div class="cost-price" style="margin-top:0.45rem;">299 €<span class="per">/ mois · fonctionnement</span></div>
-                <div class="cost-price" style="margin-top:0.45rem;">+ 199 €<span class="per">/ mois · suivi, maintenance &amp; rapports</span></div>
+                <div class="cost-price" style="margin-top:0.45rem;">249 €<span class="per">/ mois · forfait tout compris (2 assistants)</span></div>
                 <div class="cost-note">50 % à la signature · 50 % à la livraison</div>
-                <div class="cost-note"><strong>= 498 €/mois tout compris après la mise en place</strong></div>
               </div>
               <div class="hero-included">
-                <div class="incl-title">Ce qui est inclus</div>
+                <div class="incl-title">Ce que couvre le forfait</div>
                 <div class="cost-desc">
                   <ul class="cost-list">
-                    <li>2 assistants (mails techniques + relances) + chef d'orchestre</li>
-                    <li>Votre tableau de bord OZO + accès mobile</li>
-                    <li>Suivi, corrections et rapports d'avancement</li>
-                    <li>Point régulier sur vos indicateurs · maintenance incluse</li>
+                    <li>Vos assistants en fonctionnement + le chef d'orchestre</li>
+                    <li>Votre interface OZO (ordinateur &amp; mobile, connexion Google)</li>
+                    <li>Hébergement en Europe + maintien en condition</li>
+                    <li><strong>Bilan mensuel automatique</strong> · corrections incluses</li>
                   </ul>
                 </div>
               </div>
             </div>
           </div>
-          <div class="cost-card">
-            <span class="cost-badge">Chaque assistant en plus</span>
-            <div class="cost-price">500 €<span class="per">création · + 50 €/mois</span></div>
-            <div class="cost-note">même tarif simple pour tous · activé quand vous le décidez</div>
-            <div class="cost-desc">
-              <ul class="cost-list">
-                <li>Prospection · 500 € + 50 €/mois</li>
-                <li>Contenu &amp; réseaux · 500 € + 50 €/mois</li>
-                <li>Chatbot site · 500 € + 50 €/mois</li>
-                <li>Veille marché · 500 € + 50 €/mois</li>
-              </ul>
-            </div>
+          <div class="cost-card" style="border-color:rgba(255,149,0,0.3);">
+            <span class="cost-badge">Toute l'équipe en place</span>
+            <div class="cost-price">299 €<span class="per">/ mois · forfait fixe</span></div>
+            <div class="cost-note"><strong>Il ne grimpe pas assistant par assistant.</strong> Le forfait passe de 249 à 299 € une fois toute l'équipe en place, et s'arrête là.</div>
           </div>
           <div class="cost-card">
-            <span class="cost-badge">Sur-mesure · au cas par cas</span>
-            <div class="cost-price">sur devis<span class="per">selon le besoin</span></div>
-            <div class="cost-note">pour aller au-delà des assistants prévus</div>
+            <span class="cost-badge">Chaque assistant en plus · création, une fois</span>
             <div class="cost-desc">
               <ul class="cost-list">
-                <li>Un assistant pour un nouveau métier</li>
-                <li>Un blog / contenu SEO, un développement spécifique</li>
-                <li>Une intégration particulière</li>
-                <li>Chiffré clairement avant de lancer</li>
+                <li>Prospection · <strong>650 €</strong></li>
+                <li>Veille marché · <strong>650 €</strong></li>
+                <li>Chatbot site · <strong>1 000 €</strong></li>
+                <li>Contenu &amp; blog · <strong>1 050 €</strong></li>
               </ul>
             </div>
+            <div class="cost-note">une seule fois · puis il tourne dans votre forfait fixe · chiffré avant de lancer. Nouveau métier / intégration : sur devis.</div>
           </div>
+        </div>
+        <div class="result">
+          <span class="label">L'esprit</span>
+          <span class="txt">Le forfait fixe couvre <strong>votre infrastructure souveraine + un bilan mensuel + la maintenance</strong>. Créer un nouvel assistant se règle <strong>une fois</strong> ; ensuite il tourne sans surcoût mensuel. <strong>Pas de mauvaise surprise.</strong></span>
         </div>
       </div>
     </section>
 
-    <!-- 13. Le plan : du 12 juin au pilote (planning + prochaines étapes fusionnés) -->
-    <section class="slide" id="slide-13">
-      <div class="slide-num">13 / 13</div>
+    <!-- 6. Le calendrier + contact -->
+    <section class="slide" id="slide-6">
+      <div class="slide-num">06 / 06</div>
       <div class="slide-inner">
-        <p class="story-label gradient">Le calendrier · du 12 juin au pilote</p>
+        <p class="story-label gradient">La suite · du feu vert au pilote</p>
         <h1 class="gradient">Des jalons simples,<br>vous validez à chaque étape</h1>
         <p class="lead">Feu vert / feu rouge à chaque jalon : rien ne continue sans votre accord. On démarre quand vous voulez.</p>
         <div class="cal">
           <div class="cal-step">
             <div class="cal-dot"></div>
-            <div class="cal-when">12 juin</div>
-            <div class="cal-ttl">Visite &amp; offre</div>
-            <div class="cal-txt">Atelier, déjeuner, présentation. Vous repartez avec l'offre détaillée.</div>
+            <div class="cal-when">Feu vert</div>
+            <div class="cal-ttl">On lance</div>
+            <div class="cal-txt">Offre validée, on cale la date de démarrage.</div>
           </div>
           <div class="cal-step">
             <div class="cal-dot"></div>
-            <div class="cal-when">Signature · +2 sem.</div>
+            <div class="cal-when">+2 sem.</div>
             <div class="cal-ttl">Préparation</div>
-            <div class="cal-txt">On rassemble vos fiches et mails, on configure les accès, on pose le compteur de départ.</div>
+            <div class="cal-txt">On rassemble vos fiches et mails, on configure les accès Google, on pose le compteur.</div>
           </div>
           <div class="cal-step">
             <div class="cal-dot auto"></div>
             <div class="cal-when">Semaine 3</div>
             <div class="cal-ttl">1<sup>er</sup> brouillon</div>
-            <div class="cal-txt">Un vrai brouillon de mail technique, à valider depuis votre tableau de bord.</div>
+            <div class="cal-txt">Un vrai brouillon de mail technique, à valider depuis votre interface.</div>
           </div>
           <div class="cal-step">
             <div class="cal-dot auto"></div>
             <div class="cal-when">Semaine 6</div>
             <div class="cal-ttl">Pilote en route</div>
-            <div class="cal-txt">Vos 2 assistants + le tableau de bord OZO opérationnels (aussi sur smartphone).</div>
+            <div class="cal-txt">Vos 2 assistants + l'interface OZO opérationnels (aussi sur smartphone).</div>
           </div>
           <div class="cal-step">
             <div class="cal-dot green"></div>
-            <div class="cal-when">Puis · 1 / mois</div>
+            <div class="cal-when">Ensuite</div>
             <div class="cal-ttl">L'équipe grandit</div>
-            <div class="cal-txt">Prospection, contenu, chatbot, veille… ajoutés un par mois, à votre rythme.</div>
+            <div class="cal-txt">Contenu &amp; blog, prospection, chatbot, veille… ajoutés à votre rythme.</div>
           </div>
         </div>
         <div class="result">
           <span class="label">Résultat</span>
-          <span class="txt"><strong>Un pilote opérationnel en 6 semaines, puis une équipe qui grandit à votre rythme.</strong> On démarre quand vous voulez.</span>
+          <span class="txt"><strong>Un pilote opérationnel en 6 semaines, puis une équipe qui grandit à votre rythme</strong> — sans que votre forfait s'envole.</span>
         </div>
         <p class="note" style="margin-top:1.1rem"><strong>Contact —</strong> Thomas Van Dorsselaere · Facile-IA · <a href="https://ozo-presentation.vercel.app/demo.html" target="_blank" rel="noopener">Démo assistant mails</a></p>
       </div>
@@ -784,7 +315,7 @@
   <footer class="footer-bar">
     <span class="nav-hint"><kbd>←</kbd> <kbd>→</kbd> · scroll · <kbd>Espace</kbd> = suivant</span>
     <span class="footer-center">Gagnez du temps pour ce qui compte vraiment.</span>
-    <span class="footer-tag">Facile-IA × OZO · 12 juin 2026 · <strong>TVA non applicable, art. 293 B du CGI</strong></span>
+    <span class="footer-tag">Facile-IA × OZO · offre révisée juin 2026 · <strong>TVA non applicable, art. 293 B du CGI</strong></span>
   </footer>
 
   <script>
