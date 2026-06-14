@@ -38,7 +38,7 @@
     .org-agent.soon .ph { color: var(--violet); background: rgba(139, 92, 246, 0.1); }
 
     /* Calendrier horizontal */
-    .cal { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.4rem; margin-top: 1.6rem; position: relative; }
+    .cal { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.4rem; margin-top: 1.6rem; position: relative; }
     .cal::before { content: ""; position: absolute; top: 8px; left: 10%; right: 10%; height: 2px; background: var(--border-strong); z-index: 0; }
     .cal-step { position: relative; z-index: 1; text-align: center; padding: 0 0.5rem; }
     .cal-dot { width: 18px; height: 18px; border-radius: 50%; margin: 0 auto; border: 3px solid #fff; background: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
@@ -56,6 +56,20 @@
       .cal-dot { margin: 0; }
       .cal-step { text-align: left; }
     }
+
+    /* Récap fonctions & livrables */
+    .recap-table { width: 100%; border-collapse: collapse; margin-top: 1.3rem; font-size: 0.84rem; }
+    .recap-table th, .recap-table td { text-align: left; padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.4; }
+    .recap-table thead th { font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted-2); border-bottom: 2px solid var(--border-strong); }
+    .recap-table tbody tr:hover { background: #f6f7f9; }
+    .recap-table .asst { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 700; color: var(--text); white-space: nowrap; }
+    .recap-table .asst .ph { display: block; font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted-2); margin-top: 0.15rem; }
+    .recap-table td strong { color: var(--text); }
+    @media (max-width: 720px) {
+      .recap-table { font-size: 0.76rem; }
+      .recap-table th, .recap-table td { padding: 0.45rem 0.5rem; }
+      .recap-table .asst { white-space: normal; }
+    }
   </style>
 </head>
 <body>
@@ -65,7 +79,7 @@
       <div class="logo">Facile-<span>IA</span> × OZO</div>
       <div class="topbar-right">
         <span class="tag">Offre révisée · juin 2026</span>
-        <span class="counter"><strong id="cur">1</strong> / <span id="tot">6</span></span>
+        <span class="counter"><strong id="cur">1</strong> / <span id="tot">5</span></span>
       </div>
     </div>
     <div class="progress-track"><div class="progress-bar" id="progress"></div></div>
@@ -75,19 +89,18 @@
 
     <!-- 1. Cover -->
     <section class="slide" id="slide-1">
-      <div class="slide-num">01 / 06</div>
+      <div class="slide-num">01 / 05</div>
       <div class="slide-inner">
         <p class="story-label gradient" style="font-size:clamp(1.8rem,4vw,3rem);text-transform:none;letter-spacing:-0.025em;font-weight:800;margin-bottom:0.5rem;">OZO × Facile-IA</p>
         <h1 class="gradient cover-title" style="font-size:clamp(1.4rem,3vw,2.2rem);font-weight:600;">Une équipe d'assistants,<br>un forfait simple</h1>
         <p class="lead">Suite à notre échange : une équipe d'assistants numériques sur-mesure pour OZO, pilotée par un chef d'orchestre. Ils préparent le travail répétitif, <strong>vous validez d'un clic</strong>, vous gardez la main.</p>
-        <p class="note"><strong>Au programme —</strong> vos assistants · votre interface · vos données (souveraineté &amp; RGPD) · <strong>le budget révisé</strong> · la suite.</p>
-        <p class="note"><strong>Nouveau depuis notre point —</strong> un <strong>forfait mensuel fixe qui ne grimpe plus assistant par assistant</strong>, et la création de chaque assistant réglée une seule fois, à l'acte.</p>
+        <p class="note"><strong>Au programme —</strong> vos assistants · le détail (fonctions &amp; livrables) · <strong>le budget</strong> · la suite.</p>
       </div>
     </section>
 
     <!-- 2. Vos assistants -->
     <section class="slide tall" id="slide-2">
-      <div class="slide-num">02 / 06</div>
+      <div class="slide-num">02 / 05</div>
       <div class="slide-inner">
         <p class="story-label">Votre équipe · pilotée par un chef d'orchestre</p>
         <h1>Des assistants formés à OZO,<br>pas un logiciel de plus</h1>
@@ -121,8 +134,8 @@
               <div class="ph">Phase 1</div>
             </div>
             <div class="org-agent soon">
-              <div class="n">Contenu &amp; blog</div>
-              <div class="p">Trouve les idées, rédige posts &amp; articles — vous validez</div>
+              <div class="n">Marketing, contenu &amp; blog</div>
+              <div class="p">Trouve les idées, oriente la stratégie, rédige posts &amp; articles — vous validez</div>
               <div class="ph">Phase 2</div>
             </div>
             <div class="org-agent soon">
@@ -143,93 +156,59 @@
           </div>
         </div>
         <div class="result">
-          <span class="label">L'assistant Contenu</span>
-          <span class="txt">Il <strong>trouve les idées</strong>, oriente la com sur vos réseaux et <strong>rédige le blog tout seul</strong>. Vous validez étape par étape — <strong>vous n'écrivez rien</strong>.</span>
+          <span class="label">L'agent marketing, contenu &amp; blog</span>
+          <span class="txt">Il <strong>propose les idées</strong>, en phase avec sa connaissance d'OZO ; vous <strong>échangez avec lui</strong> et validez la stratégie. Ensuite il déroule : il <strong>rédige les articles de blog seul</strong>, propose un <strong>calendrier de publication</strong> et prépare les posts. Vous validez — <strong>vous n'écrivez rien</strong>.</span>
         </div>
       </div>
     </section>
 
-    <!-- 3. Votre interface -->
-    <section class="slide" id="slide-3">
-      <div class="slide-num">03 / 06</div>
+    <!-- 3. Fonctions & livrables -->
+    <section class="slide tall" id="slide-recap">
+      <div class="slide-num">03 / 05</div>
       <div class="slide-inner">
-        <p class="story-label">Votre interface · simple, sur votre téléphone</p>
-        <h1>Une seule appli,<br>chacun ses fonctions</h1>
-        <p class="lead">Tout passe par un outil que vous avez déjà : <strong>votre compte Google</strong>. Vous vous connectez, et chacun (JP, Élo, Micka) voit <strong>uniquement ses tâches</strong>.</p>
-        <div class="steps3">
-          <div class="step3">
-            <div class="big">1</div>
-            <div class="ttl">L'assistant prépare</div>
-            <p>Un mail arrive, ou c'est lundi matin : l'assistant rédige un <strong>brouillon</strong> à partir de vos fiches et de votre historique. Tout seul.</p>
-          </div>
-          <div class="step3">
-            <div class="big">2</div>
-            <div class="ttl">Vous êtes alerté</div>
-            <p>Le brouillon arrive sur votre interface — aussi sur téléphone — avec 3 boutons : <strong>Envoyer · Modifier · Refaire</strong>. Vous lisez en 10 secondes.</p>
-          </div>
-          <div class="step3">
-            <div class="big">3</div>
-            <div class="ttl">Vous validez, c'est parti</div>
-            <p>Un clic et c'est envoyé. <strong>Rien ne part sans votre accord.</strong> L'assistant <strong>s'améliore à chaque correction</strong> et vous recevez un <strong>bilan mensuel automatique</strong>.</p>
-          </div>
-        </div>
-        <p class="note"><strong>Démo live —</strong> <a href="https://ozo-presentation.vercel.app/demo.html" target="_blank" rel="noopener">Essayer l'assistant mails techniques →</a> (le lien que je vous ai laissé reste actif)</p>
-        <div class="capot">
-          <strong>Connexion —</strong> chacun se connecte avec son compte Google OZO. Pas de mot de passe à gérer, et les droits de chacun sont réglés depuis la même appli.
-        </div>
+        <p class="story-label">Le détail · ce que fait chaque assistant et ce qu'il vous livre</p>
+        <h1>Fonctions &amp; livrables,<br>assistant par assistant</h1>
+        <p class="lead">Chaque assistant <strong>prépare</strong>, vous <strong>validez</strong>. Voici concrètement ce qu'il fait et ce que vous recevez.</p>
+        <table class="recap-table">
+          <thead><tr><th>Assistant</th><th>Ce qu'il fait</th><th>Ce que vous recevez</th></tr></thead>
+          <tbody>
+            <tr><td class="asst">Socle &amp; conformité<span class="ph">Phase 1</span></td><td>Met en place votre <strong>interface OZO</strong> (connexion Google, mobile &amp; PC), l'hébergement en Europe et le chef d'orchestre qui pilote les assistants</td><td><strong>Infrastructure propriétaire</strong> · <strong>RGPD compliant</strong></td></tr>
+            <tr><td class="asst">Mails techniques<span class="ph">Phase 1</span></td><td><strong>Connecté directement à votre boîte Gmail</strong> : brouillons de réponses SAV/technique <strong>avec sources citées</strong> + liens directs vers vos pages produit</td><td>Assistant mail + vue validation (Envoyer / Modifier / Refaire) + <strong>bilan mensuel</strong></td></tr>
+            <tr><td class="asst">Relances commerciales<span class="ph">Phase 1</span></td><td>Relance des devis (J+7 / J+14 / J+30), réveil des 500 clients endormis, suivi des 80 bons clients</td><td>Brouillons de relances + <strong>validation par lot</strong> (~50 d'un coup)</td></tr>
+            <tr><td class="asst">Marketing, contenu &amp; blog<span class="ph">Phase 2</span></td><td>Trouve les idées, <strong>oriente votre stratégie</strong>, bâtit le calendrier, rédige <strong>posts réseaux + articles de blog</strong>, choisit les photos, <strong>publie après votre validation</strong> ; chat « directeur marketing » pour échanger</td><td>Calendrier éditorial + posts FB / Insta / LinkedIn + articles publiés</td></tr>
+            <tr><td class="asst">Prospection<span class="ph">Phase 2</span></td><td>Détecte de nouveaux comptes (vélo + industrie), les qualifie, propose un angle d'approche par profil</td><td>Fiches prospects qualifiées + angle + brouillon de 1<sup>er</sup> contact à valider</td></tr>
+            <tr><td class="asst">Veille marché<span class="ph">Phase 2</span></td><td>Scan mensuel de l'actualité &amp; des <strong>brevets</strong> du secteur ; dossier détaillé sur demande</td><td>Rapport mensuel classé + dossiers approfondis à la demande</td></tr>
+            <tr><td class="asst">Chatbot site<span class="ph">Phase 2</span></td><td><strong>2 niveaux au choix :</strong> A — guide d'achat sur le cœur de gamme + escalade ; <strong>B (recommandé)</strong> — assistant complet toute la gamme + FAQ + orientation SAV</td><td>Widget sur votre site + escalade vers formulaire / SAV</td></tr>
+          </tbody>
+        </table>
+        <p class="note">Règle d'or : l'assistant propose, <strong>vous décidez</strong>. Rien ne part ni n'est publié sans votre validation.</p>
       </div>
     </section>
 
-    <!-- 4. Vos données / souveraineté -->
-    <section class="slide" id="slide-4">
-      <div class="slide-num">04 / 06</div>
-      <div class="slide-inner">
-        <p class="story-label">Le point qui compte le plus</p>
-        <h1>Vous gardez la main,<br>vos données restent chez vous</h1>
-        <p class="lead">Notre règle non négociable : l'IA <strong>propose</strong>, vous <strong>décidez</strong>. Vos données restent chez vous, en Europe. C'est la vraie différence avec un abonnement tout-fait.</p>
-        <div class="trust-grid">
-          <div class="trust-card">
-            <div class="name">Validation systématique</div>
-            <p>Chaque mail, chaque relance passe par votre clic. <strong>Zéro envoi automatique.</strong></p>
-          </div>
-          <div class="trust-card">
-            <div class="name">Vos données en Europe</div>
-            <p>Fiches, clients, historique restent sur <strong>vos serveurs (UE)</strong>. <strong>Rien n'est réutilisé pour entraîner l'IA.</strong> La mise en conformité RGPD est <strong>incluse</strong>.</p>
-          </div>
-          <div class="trust-card">
-            <div class="name">Un actif à vous, pas une location</div>
-            <p>Solution ouverte (libre). Vos assistants, leur savoir et vos données vous appartiennent, <strong>dans un format standard</strong>. Pas de verrou.</p>
-          </div>
-        </div>
-        <div class="result">
-          <span class="label">La différence</span>
-          <span class="txt">Un abonnement type Limova, c'est une <strong>équipe générique louée</strong>. Ici, vous <strong>possédez</strong> des assistants sur-mesure, branchés sur vos outils et vos règles.</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 5. Le budget révisé -->
+    <!-- 4. Le budget -->
     <section class="slide tall" id="slide-5">
-      <div class="slide-num">05 / 06</div>
+      <div class="slide-num">04 / 05</div>
       <div class="slide-inner">
         <p class="story-label">Le budget · révisé suite à notre point</p>
         <h1>Un forfait fixe,<br>qui ne grimpe pas par assistant</h1>
-        <p class="lead">Une mise en place une seule fois, puis un <strong>forfait mensuel tout compris</strong> qui reste stable même quand l'équipe s'agrandit. La création de chaque assistant se règle <strong>à l'acte</strong>.</p>
+        <p class="lead">Vous réglez la création <strong>une seule fois</strong>, en deux temps : d'abord vos 2 premiers assistants, puis les 4 autres quand vous validez. Ensuite, un <strong>forfait mensuel fixe à 249 €</strong> — quel que soit le nombre d'assistants.</p>
         <div class="cost-grid">
           <div class="cost-card cost-card-hero" style="grid-column:span 2;border-color:rgba(255,149,0,0.45);background:linear-gradient(180deg,#ffffff 0%,#fff7ed 100%);">
-            <span class="cost-badge" style="color:var(--pillar-auto);background:rgba(255,149,0,0.12);">Votre offre de départ</span>
+            <span class="cost-badge" style="color:var(--pillar-auto);background:rgba(255,149,0,0.12);">Votre offre</span>
             <div class="hero-split">
               <div class="hero-prices">
-                <div class="cost-note" style="text-decoration:line-through;opacity:.55;">Mise en place · 7 500 € · ≈ 75 h de travail</div>
-                <div class="cost-price">2 499 €<span class="per">mise en place · une seule fois</span></div>
-                <div class="cost-price" style="margin-top:0.45rem;">249 €<span class="per">/ mois · forfait tout compris (2 assistants)</span></div>
+                <div class="cost-note" style="text-decoration:line-through;opacity:.55;">Phase 1 · catalogue 7 500 €</div>
+                <div class="cost-price">2 499 €<span class="per">Phase 1 · mise en place (2 assistants) · une fois</span></div>
+                <div class="cost-note" style="text-decoration:line-through;opacity:.55;margin-top:0.55rem;">Phase 2 · à la carte 3 350 €</div>
+                <div class="cost-price">1 499 €<span class="per">Phase 2 · les 4 autres assistants · une fois</span></div>
+                <div class="cost-price" style="margin-top:0.55rem;">249 €<span class="per">/ mois · forfait fixe tout compris</span></div>
                 <div class="cost-note">50 % à la signature · 50 % à la livraison</div>
               </div>
               <div class="hero-included">
-                <div class="incl-title">Ce que couvre le forfait</div>
+                <div class="incl-title">Ce que couvre le forfait mensuel</div>
                 <div class="cost-desc">
                   <ul class="cost-list">
-                    <li>Vos assistants en fonctionnement + le chef d'orchestre</li>
+                    <li>Tous vos assistants en fonctionnement + le chef d'orchestre</li>
                     <li>Votre interface OZO (ordinateur &amp; mobile, connexion Google)</li>
                     <li>Hébergement en Europe + maintien en condition</li>
                     <li><strong>Bilan mensuel automatique</strong> · corrections incluses</li>
@@ -238,34 +217,21 @@
               </div>
             </div>
           </div>
-          <div class="cost-card" style="border-color:rgba(255,149,0,0.3);">
-            <span class="cost-badge">Toute l'équipe en place</span>
-            <div class="cost-price">299 €<span class="per">/ mois · forfait fixe</span></div>
-            <div class="cost-note"><strong>Il ne grimpe pas assistant par assistant.</strong> Le forfait passe de 249 à 299 € une fois toute l'équipe en place, et s'arrête là.</div>
-          </div>
-          <div class="cost-card">
-            <span class="cost-badge">Chaque assistant en plus · création, une fois</span>
-            <div class="cost-desc">
-              <ul class="cost-list">
-                <li>Prospection · <strong>650 €</strong></li>
-                <li>Veille marché · <strong>650 €</strong></li>
-                <li>Chatbot site · <strong>1 000 €</strong></li>
-                <li>Contenu &amp; blog · <strong>1 050 €</strong></li>
-              </ul>
-            </div>
-            <div class="cost-note">une seule fois · puis il tourne dans votre forfait fixe · chiffré avant de lancer. Nouveau métier / intégration : sur devis.</div>
+          <div class="cost-card" style="grid-column:span 2;border-color:rgba(255,149,0,0.3);">
+            <span class="cost-badge">Un forfait qui ne grimpe pas</span>
+            <div class="cost-note"><strong>249 €/mois, quel que soit le nombre d'assistants.</strong> La Phase 2 n'est lancée qu'une fois la Phase 1 livrée — <strong>pas de maintenance qui s'accumule</strong>. Les assistants tournent seuls ; en ajouter ne change pas votre forfait.</div>
           </div>
         </div>
         <div class="result">
           <span class="label">L'esprit</span>
-          <span class="txt">Le forfait fixe couvre <strong>votre infrastructure souveraine + un bilan mensuel + la maintenance</strong>. Créer un nouvel assistant se règle <strong>une fois</strong> ; ensuite il tourne sans surcoût mensuel. <strong>Pas de mauvaise surprise.</strong></span>
+          <span class="txt">Deux règlements <strong>une seule fois</strong> pour créer toute votre équipe, puis un <strong>forfait fixe à 249 €/mois</strong> qui ne bouge pas. <strong>Pas de mauvaise surprise.</strong></span>
         </div>
       </div>
     </section>
 
-    <!-- 6. Le calendrier + contact -->
+    <!-- 5. Le calendrier + contact -->
     <section class="slide" id="slide-6">
-      <div class="slide-num">06 / 06</div>
+      <div class="slide-num">05 / 05</div>
       <div class="slide-inner">
         <p class="story-label gradient">La suite · du feu vert au pilote</p>
         <h1 class="gradient">Des jalons simples,<br>vous validez à chaque étape</h1>
@@ -285,12 +251,6 @@
           </div>
           <div class="cal-step">
             <div class="cal-dot auto"></div>
-            <div class="cal-when">Semaine 3</div>
-            <div class="cal-ttl">1<sup>er</sup> brouillon</div>
-            <div class="cal-txt">Un vrai brouillon de mail technique, à valider depuis votre interface.</div>
-          </div>
-          <div class="cal-step">
-            <div class="cal-dot auto"></div>
             <div class="cal-when">Semaine 6</div>
             <div class="cal-ttl">Pilote en route</div>
             <div class="cal-txt">Vos 2 assistants + l'interface OZO opérationnels (aussi sur smartphone).</div>
@@ -298,8 +258,8 @@
           <div class="cal-step">
             <div class="cal-dot green"></div>
             <div class="cal-when">Ensuite</div>
-            <div class="cal-ttl">L'équipe grandit</div>
-            <div class="cal-txt">Contenu &amp; blog, prospection, chatbot, veille… ajoutés à votre rythme.</div>
+            <div class="cal-ttl">L'équipe au complet</div>
+            <div class="cal-txt">La Phase 2 — contenu &amp; blog, prospection, chatbot, veille — en un pack tout compris.</div>
           </div>
         </div>
         <div class="result">
